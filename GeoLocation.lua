@@ -97,7 +97,10 @@ function geo_location.get_target_by_name(name)
     elseif #matches == 0 then
         print(string.format('No matches found for: %s', name))
     else
-        print(string.format('Too many matchs for: %s\n\t%s', name, table.concat(matches, '\n\t')))
+        print(string.format('Too many matchs for: %s', name))
+        for _, match in ipairs(matches) do
+            print(string.format('    %s', match.name))
+        end
     end
 end
 
