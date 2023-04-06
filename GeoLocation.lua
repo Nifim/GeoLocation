@@ -39,13 +39,15 @@ function geo_location.command(raw_spell, ...)
         location_target = geo_location.get_target(args[2])
     else
          primary_target = windower.ffxi.get_mob_by_target('t')
-         local axis1 = args[1]:lower()
-         local axis2 = args[3]:lower()
-         location_target = {
-             [axis1] = tonumber(args[2] + primary_target[axis1]),
-             [axis2] = tonumber(args[4] + primary_target[axis2]),
-             z = primary_target.z,
-         }
+         if primary_target then
+            local axis1 = args[1]:lower()
+            local axis2 = args[3]:lower()
+            location_target = {
+                [axis1] = tonumber(args[2] + primary_target[axis1]),
+                [axis2] = tonumber(args[4] + primary_target[axis2]),
+                z = primary_target.z,
+            }
+        end
     end
 
     if primary_target and location_target and spell then
