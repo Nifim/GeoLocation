@@ -59,7 +59,7 @@ windower.register_event('addon command', geo_location.command)
 function geo_location.get_spell(spell_name)
     spell_name = spell_name:lower()
     for key, value in pairs(geo_spells) do
-        if key:match(spell_name) then
+        if key:find(spell_name, 1, true) then
             return value
         end
     end
