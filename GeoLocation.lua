@@ -1,6 +1,6 @@
 _addon = {}
 _addon.name = 'GeoLocation'
-_addon.version = '1.0.1'
+_addon.version = '1.1.0'
 _addon.author = 'Nifim'
 _addon.commands = {'geo', 'geolocation'}
 
