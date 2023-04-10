@@ -24,30 +24,29 @@ local function load_geo_spells()
 end
 load_geo_spells()
 
-function geo_location.command(raw_spell, ...)
-    local args = {...}
+function geo_location.command(raw_spell, raw_primaty_target, ...)
+    local location_args = {...}
 
-    local primary_target
-    local location_target
     local spell = geo_location.get_spell(raw_spell)
+    local primary_target = windower.ffxi.get_mob_by_target(raw_primaty_target)
 
-    if #args == 1 then
-        primary_target = windower.ffxi.get_mob_by_target('t')
-        location_target = geo_location.get_target(args[1])
-    elseif #args == 2 then
-        primary_target = geo_location.get_target(args[1])
-        location_target = geo_location.get_target(args[2])
+    local location_target
+    if #location_args == 1 then
+        location_target = geo_location.get_target(location_args[1])
+    elseif #location_args >= 2 then
+        local axis1 = location_args[1]:lower()
+        local axis2 = location_args[3]:lower()
+        location_target = {
+            [axis1] = tonumber(location_args[2] + primary_target[axis1]),
+            [axis2] = tonumber(location_args[4] + primary_target[axis2]),
+            z = primary_target.z,
+        }
     else
-         primary_target = windower.ffxi.get_mob_by_target('t')
-         if primary_target then
-            local axis1 = args[1]:lower()
-            local axis2 = args[3]:lower()
-            location_target = {
-                [axis1] = tonumber(args[2] + primary_target[axis1]),
-                [axis2] = tonumber(args[4] + primary_target[axis2]),
-                z = primary_target.z,
-            }
-        end
+        location_target = {
+            x = 0,
+            y = 0,
+            z = 0,
+        }
     end
 
     if primary_target and location_target and spell then
